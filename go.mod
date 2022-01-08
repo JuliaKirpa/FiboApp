@@ -3,7 +3,7 @@ module FiboApp
 go 1.13
 
 require (
-	github.com/bradfitz/gomemcache v0.0.0-20220106215444-fb4bf637b56d // indirect
+	github.com/bradfitz/gomemcache v0.0.0-20220106215444-fb4bf637b56d
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-playground/validator/v10 v10.10.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
