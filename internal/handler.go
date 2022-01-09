@@ -2,6 +2,7 @@ package internal
 
 import (
 	"FiboApp/pkg"
+	"github.com/bradfitz/gomemcache/memcache"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -9,19 +10,19 @@ import (
 
 func GetInterval() *gin.Engine {
 	router := gin.Default()
+	mc := memcache.New("memcached:11211")
 
 	router.GET("/:from/:to", func(c *gin.Context) {
 		from, err := strconv.Atoi(c.Param("from"))
 		if err != nil {
-			c.String(http.StatusBadRequest, "Use uint value for FROM")
+			c.String(http.StatusBadRequest, "Use positive integer value for FROM")
 		}
 		to, err := strconv.Atoi(c.Param("to"))
 		if err != nil {
-			c.String(http.StatusBadRequest, "Use uint value for TO")
+			c.String(http.StatusBadRequest, "Use positive integer value for TO")
 		}
-
 		er := pkg.Validate(from, to)
-		var response = pkg.Prepare(GenerateNum(from, to), from)
+		var response = pkg.Prepare(GenerateNum(from, to, mc), from)
 
 		if er == "" {
 			c.String(http.StatusOK, response)
