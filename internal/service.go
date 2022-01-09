@@ -22,22 +22,22 @@ func GenerateNum(from, to int, mc *memcache.Client) []*big.Int {
 	}
 	errCach := mc.Touch(strconv.Itoa(to), 0)
 	if errCach == nil {
-		return cachTable[from : to+1]
+		return cachTable[from:to]
 	}
 
 	table = make([]*big.Int, to+1)
 
 	table[0] = new(big.Int).SetInt64(0)
-	err := mc.Set(&memcache.Item{Key: "0", Value: []byte("0")})
+	err := mc.Set(&memcache.Item{Key: "0", Value: []byte("48")})
 	if err != nil {
 		log.Fatal(err)
 	}
 	table[1] = new(big.Int).SetInt64(1)
-	mc.Set(&memcache.Item{Key: "1", Value: []byte("1")})
+	mc.Set(&memcache.Item{Key: "1", Value: []byte("49")})
 
 	for i := 2; i <= to; i += 1 {
 		table[i] = new(big.Int).Add(table[i-1], table[i-2])
 		mc.Set(&memcache.Item{Key: strconv.Itoa(i), Value: table[i].Bytes()})
 	}
-	return table[from : to+1]
+	return table[from:to]
 }

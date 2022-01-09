@@ -23,7 +23,7 @@ func Validate(from, to int) string {
 func Prepare(table []*big.Int, from int) string {
 	var response strings.Builder
 	for key, value := range table {
-		response.WriteString(strconv.Itoa(from + key))
+		response.WriteString(strconv.Itoa(from + 1 + key))
 		response.WriteString(" ")
 		response.WriteString(value.String())
 		response.WriteString("\n")
