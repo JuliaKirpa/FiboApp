@@ -15,11 +15,11 @@ func GetInterval() *gin.Engine {
 	router.GET("/:from/:to", func(c *gin.Context) {
 		from, err := strconv.Atoi(c.Param("from"))
 		if err != nil {
-			c.String(http.StatusBadRequest, "Use positive integer value for FROM")
+			c.String(http.StatusBadRequest, "Use positive integer value for FROM\n")
 		}
 		to, err := strconv.Atoi(c.Param("to"))
 		if err != nil {
-			c.String(http.StatusBadRequest, "Use positive integer value for TO")
+			c.String(http.StatusBadRequest, "Use positive integer value for TO\n")
 		}
 		er := pkg.Validate(from, to)
 		if er == "" {
