@@ -26,18 +26,15 @@ if not, replace with yours!
 
 * main.go
 ```
-if err := srv.Run("8080", internal.GetInterval()); err != nil {
-log.Fatalf("error while running http server: %s", err.Error())
+if err := srv.Run("YOUR_PORT", internal.GetInterval())
+
 ```
 
 * docker-compose.yml
+
 ```
   ports:
-  - "11211:11211"
-```
-* handler.go
-```
- mc := memcache.New("memcached:11211")
+  - "YOUR_PORT:11211"
 ```
 
 
