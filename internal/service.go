@@ -13,7 +13,7 @@ func GenerateNum(from, to int, mc *memcache.Client) []*big.Int {
 
 	cachTable = make([]*big.Int, to+1)
 
-	for i := from; i <= to; i += 1 {
+	for i := from - 1; i <= to; i += 1 {
 		cach, err := mc.Get(strconv.Itoa(i))
 		if err != nil {
 			break
@@ -22,18 +22,18 @@ func GenerateNum(from, to int, mc *memcache.Client) []*big.Int {
 	}
 	errCach := mc.Touch(strconv.Itoa(to), 0)
 	if errCach == nil {
-		return cachTable[from:to]
+		return cachTable[from-1 : to]
 	}
 
 	table = make([]*big.Int, to+1)
 
 	table[0] = new(big.Int).SetInt64(0)
-	err1 := mc.Set(&memcache.Item{Key: "0", Value: []byte("48")})
+	err1 := mc.Set(&memcache.Item{Key: "0", Value: table[0].Bytes()})
 	if err1 != nil {
 		log.Println(err1)
 	}
 	table[1] = new(big.Int).SetInt64(1)
-	err2 := mc.Set(&memcache.Item{Key: "1", Value: []byte("49")})
+	err2 := mc.Set(&memcache.Item{Key: "1", Value: table[1].Bytes()})
 	if err2 != nil {
 		log.Println(err2)
 	}
@@ -45,5 +45,5 @@ func GenerateNum(from, to int, mc *memcache.Client) []*big.Int {
 			log.Println(err)
 		}
 	}
-	return table[from:to]
+	return table[from-1 : to]
 }

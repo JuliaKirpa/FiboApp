@@ -58,7 +58,7 @@ When you deployed the docker-compose make sure, that containers are lifted:
 
 ## Example
 ```
-http://localhost:8080/0/20
+http://localhost:8080/1/20
 ```
 The screen displays the fibonacci values in the specified interval.
 ```
@@ -82,5 +82,4 @@ The screen displays the fibonacci values in the specified interval.
 18 1597
 19 2584
 20 4181
-21 6765
 ```
