@@ -22,9 +22,8 @@ func GetInterval() *gin.Engine {
 			c.String(http.StatusBadRequest, "Use positive integer value for TO")
 		}
 		er := pkg.Validate(from, to)
-		var response = pkg.Prepare(GenerateNum(from, to, mc), from)
-
 		if er == "" {
+			var response = pkg.Prepare(GenerateNum(from, to, mc), from)
 			c.String(http.StatusOK, response)
 		} else {
 			c.String(http.StatusBadRequest, er)
