@@ -22,7 +22,7 @@ func GetInterval(mc *memcache.Client) *gin.Engine {
 		}
 		er := pkg.Validate(from, to)
 		if er == "" {
-			var response = pkg.Prepare(GenerateNum(from, to, mc), from)
+			var response = pkg.Prepare(CheckMemcached(from, to, mc), from)
 			c.String(http.StatusOK, response)
 		} else {
 			c.String(http.StatusBadRequest, er)
