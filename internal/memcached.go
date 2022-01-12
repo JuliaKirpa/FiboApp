@@ -4,26 +4,35 @@ import (
 	"github.com/bradfitz/gomemcache/memcache"
 	"log"
 	"math/big"
+	"os"
 	"strconv"
 )
 
-func CheckMemcached(from, to int, mc *memcache.Client) []*big.Int {
+type Memcached struct {
+	mc *memcache.Client
+}
+
+var mc = Memcached{
+	memcache.New("memcached:" + os.Getenv("MC_PORT")),
+}
+
+func (m *Memcached) CheckMemcached(from int, to int) []*big.Int {
 	var cachTable []*big.Int
 	cachTable = make([]*big.Int, to+1)
 
 	for i := from - 1; i <= to; i += 1 {
-		cach, err := mc.Get(strconv.Itoa(i))
+		cach, err := m.mc.Get(strconv.Itoa(i))
 		if err != nil {
-			return GenerateNum(from, to, mc)
+			return GenerateNum(from, to)
 		}
 		cachTable[i] = new(big.Int).SetBytes(cach.Value)
 	}
 	return cachTable[from-1 : to]
 }
 
-func AddMemcached(mc *memcache.Client, table []*big.Int) {
+func (m *Memcached) AddMemcached(table []*big.Int) {
 	for key, value := range table {
-		err := mc.Set(&memcache.Item{Key: strconv.Itoa(key), Value: value.Bytes()})
+		err := m.mc.Set(&memcache.Item{Key: strconv.Itoa(key), Value: value.Bytes()})
 		if err != nil {
 			log.Println(err)
 		}

@@ -1,11 +1,10 @@
 package internal
 
 import (
-	"github.com/bradfitz/gomemcache/memcache"
 	"math/big"
 )
 
-func GenerateNum(from, to int, mc *memcache.Client) []*big.Int {
+func GenerateNum(from, to int) []*big.Int {
 	var table []*big.Int
 	table = make([]*big.Int, to+1)
 
@@ -15,6 +14,6 @@ func GenerateNum(from, to int, mc *memcache.Client) []*big.Int {
 	for i := 2; i <= to; i += 1 {
 		table[i] = new(big.Int).Add(table[i-1], table[i-2])
 	}
-	go AddMemcached(mc, table)
+	go mc.AddMemcached(table)
 	return table[from-1 : to]
 }
