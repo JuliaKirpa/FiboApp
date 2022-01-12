@@ -5,12 +5,13 @@ import (
 	"github.com/bradfitz/gomemcache/memcache"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"os"
 	"strconv"
 )
 
 func GetInterval() *gin.Engine {
 	router := gin.Default()
-	mc := memcache.New("memcached:11211")
+	mc := memcache.New("memcached:" + os.Getenv("MC_PORT"))
 
 	router.GET("/:from/:to", func(c *gin.Context) {
 		from, err := strconv.Atoi(c.Param("from"))
