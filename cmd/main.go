@@ -3,16 +3,19 @@ package main
 import (
 	"FiboApp/api"
 	"FiboApp/internal"
-	"github.com/bradfitz/gomemcache/memcache"
+	"github.com/joho/godotenv"
 	"log"
 	"os"
 )
 
 func main() {
-	srv := new(api.Server)
-	mc := memcache.New("memcached:" + os.Getenv("MC_PORT"))
+	if err := godotenv.Load(); err != nil {
+		log.Fatalf("error load env variable: %s", err.Error())
+	}
 
-	if err := srv.Run(os.Getenv("PORT"), internal.GetInterval(mc)); err != nil {
+	srv := new(api.Server)
+
+	if err := srv.Run(os.Getenv("PORT"), internal.GetInterval()); err != nil {
 		log.Fatalf("error while running http server: %s", err.Error())
 	}
 }

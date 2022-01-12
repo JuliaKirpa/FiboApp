@@ -11,6 +11,9 @@ services:
       - memcached
     networks:
       - app-tier
+    environment:
+      - PORT=8080
+      - MC_PORT=11211
   memcached:
     container_name: memcached
     image: 'bitnami/memcached:latest'

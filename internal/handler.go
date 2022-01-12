@@ -2,13 +2,12 @@ package internal
 
 import (
 	"FiboApp/pkg"
-	"github.com/bradfitz/gomemcache/memcache"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
 )
 
-func GetInterval(mc *memcache.Client) *gin.Engine {
+func GetInterval() *gin.Engine {
 	router := gin.Default()
 	//	mc := memcache.New("memcached:" + os.Getenv("MC_PORT"))
 
@@ -23,7 +22,7 @@ func GetInterval(mc *memcache.Client) *gin.Engine {
 		}
 		er := pkg.Validate(from, to)
 		if er == "" {
-			var response = pkg.Prepare(GenerateNum(from, to, mc), from)
+			var response = pkg.Prepare(GenerateNum(from, to), from)
 			c.String(http.StatusOK, response)
 		} else {
 			c.String(http.StatusBadRequest, er)
