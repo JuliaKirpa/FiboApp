@@ -21,8 +21,8 @@ func GetInterval() *gin.Engine {
 		}
 		er := pkg.Validate(from, to)
 		if er == "" {
-			var response = pkg.Prepare(mc.CheckMemcached(from, to), from)
-			c.String(http.StatusOK, response)
+			response := pkg.JSON(mc.CheckMemcached(from, to), from)
+			c.JSON(http.StatusOK, response)
 		} else {
 			c.String(http.StatusBadRequest, er)
 		}

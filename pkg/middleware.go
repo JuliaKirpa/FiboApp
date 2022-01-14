@@ -1,11 +1,5 @@
 package pkg
 
-import (
-	"math/big"
-	"strconv"
-	"strings"
-)
-
 func Validate(from, to int) string {
 	switch {
 	case from == 0:
@@ -26,13 +20,13 @@ func Validate(from, to int) string {
 	return ""
 }
 
-func Prepare(table []*big.Int, from int) string {
-	var response strings.Builder
-	for key, value := range table {
-		response.WriteString(strconv.Itoa(from + key))
-		response.WriteString(" ")
-		response.WriteString(value.String())
-		response.WriteString("\n")
-	}
-	return response.String()
-}
+//func Prepare(table []*big.Int, from int) string {
+//	var response strings.Builder
+//	for key, value := range table {
+//		response.WriteString(strconv.Itoa(from + key))
+//		response.WriteString(" ")
+//		response.WriteString(value.String())
+//		response.WriteString("\n")
+//	}
+//	return response.String()
+//}
