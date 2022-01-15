@@ -55,28 +55,33 @@ When you deployed the docker-compose make sure, that containers are lifted:
 
 ## Example
 ```
-http://localhost:8080/1/20
+http://localhost:8080/5/12
 ```
 The screen displays the fibonacci values in the specified interval.
 ```
-1 0
-2 1
-3 1
-4 2
-5 3
-6 5
-7 8
-8 13
-9 21
-10 34
-11 55
-12 89
-13 144
-14 233
-15 377
-16 610
-17 987
-18 1597
-19 2584
-20 4181
+	
+0	
+id	5
+value	3
+1	
+id	6
+value	5
+2	
+id	7
+value	8
+3	
+id	8
+value	13
+4	
+id	9
+value	21
+5	
+id	10
+value	34
+6	
+id	11
+value	55
+7	
+id	12
+value	89
 ```
