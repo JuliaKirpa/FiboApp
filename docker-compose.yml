@@ -9,11 +9,18 @@ services:
     restart: on-failure
     depends_on:
       - memcached
+      - grpc
     networks:
       - app-tier
     environment:
       - PORT=8080
       - MC_PORT=11211
+      - GRPC_PORT=5001
+  grpc:
+    container_name: grpc
+    ports:
+      - "5001:5001"
+    restart: always
   memcached:
     container_name: memcached
     image: 'bitnami/memcached:latest'

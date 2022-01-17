@@ -16,6 +16,7 @@ func main() {
 	}
 
 	newServ := grpc.NewServer()
+
 	if err := api.GRPCRun(os.Getenv("GRPC_PORT"), newServ); err != nil {
 		log.Fatalf("error while running gRPC server: %s", err.Error())
 	}
