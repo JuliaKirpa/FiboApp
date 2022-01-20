@@ -16,7 +16,7 @@ var mc = Memcached{
 	memcache.New("memcached:" + os.Getenv("MC_PORT")),
 }
 
-func (m *Memcached) CheckMemcached(from int, to int) []*big.Int {
+func (m *Memcached) CheckMemcached(from, to int) []*big.Int {
 	var cachTable []*big.Int
 	cachTable = make([]*big.Int, to+1)
 

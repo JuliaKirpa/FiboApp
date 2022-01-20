@@ -38,6 +38,7 @@ func GetInterval() *gin.Engine {
 			if err1 != nil {
 				c.String(http.StatusBadRequest, "err from gRPC Start")
 			}
+			//JSONresp := pkg.Prepare(response, from)
 			c.JSON(http.StatusOK, response)
 		} else {
 			c.String(http.StatusBadRequest, er)

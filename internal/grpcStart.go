@@ -3,6 +3,7 @@ package internal
 import (
 	pb "FiboApp/api/lib"
 	"context"
+	"fmt"
 	"math/big"
 )
 
@@ -12,14 +13,17 @@ type GServer struct {
 
 func (g *GServer) GRPCStart(ctx context.Context, inter *pb.Request) (*pb.Response, error) {
 	var table []*big.Int
-	table = mc.CheckMemcached(int(inter.From), int(inter.To))
 	var jsonData []*pb.FiboVal
 
+	table = mc.CheckMemcached(int(inter.GetFrom()), int(inter.GetTo()))
+
 	for key, value := range table {
-		numb := &pb.FiboVal{Id: int32(key) + inter.From, Value: value.Bytes()}
+		numb := pb.FiboVal{Id: int32(key) + inter.GetFrom(), Value: value.Bytes()}
+		fmt.Println(numb.Value)
 		jsonData = append(jsonData, numb)
 	}
-	resp := pb.Response{List: jsonData}
 
+	resp := pb.Response{List: jsonData}
+	
 	return &resp, nil
 }

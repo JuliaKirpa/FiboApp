@@ -20,13 +20,24 @@ func Validate(from, to int) string {
 	return ""
 }
 
-//func Prepare(table []*big.Int, from int) string {
-//	var response strings.Builder
-//	for key, value := range table {
-//		response.WriteString(strconv.Itoa(from + key))
-//		response.WriteString(" ")
-//		response.WriteString(value.String())
-//		response.WriteString("\n")
+//type JSONValue struct {
+//	number int
+//	value  *big.Int
+//}
+//type JSONValues []JSONValue
+//
+//func Prepare(response *lib.Response, from int) JSONValues {
+//	var table JSONValues
+//
+//	for _, value := range response.GetList() {
+//		k := value.GetValue()
+//		fmt.Println(k)
+//		jnew := JSONValue{
+//			number: int(value.Id),
+//			value:  new(big.Int).SetBytes(value.Value),
+//		}
+//		fmt.Println(jnew)
+//		table = append(table, jnew)
 //	}
-//	return response.String()
+//	return table
 //}
