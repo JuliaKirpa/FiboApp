@@ -22,7 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type FiboAppClient interface {
-	GRPCStart(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
+	GRPCfiboCalc(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
 }
 
 type fiboAppClient struct {
@@ -33,9 +33,9 @@ func NewFiboAppClient(cc grpc.ClientConnInterface) FiboAppClient {
 	return &fiboAppClient{cc}
 }
 
-func (c *fiboAppClient) GRPCStart(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
+func (c *fiboAppClient) GRPCfiboCalc(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
 	out := new(Response)
-	err := c.cc.Invoke(ctx, "/api.FiboApp/GRPCStart", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/api.FiboApp/GRPCfiboCalc", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,7 @@ func (c *fiboAppClient) GRPCStart(ctx context.Context, in *Request, opts ...grpc
 // All implementations must embed UnimplementedFiboAppServer
 // for forward compatibility
 type FiboAppServer interface {
-	GRPCStart(context.Context, *Request) (*Response, error)
+	GRPCfiboCalc(context.Context, *Request) (*Response, error)
 	mustEmbedUnimplementedFiboAppServer()
 }
 
@@ -54,8 +54,8 @@ type FiboAppServer interface {
 type UnimplementedFiboAppServer struct {
 }
 
-func (UnimplementedFiboAppServer) GRPCStart(context.Context, *Request) (*Response, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GRPCStart not implemented")
+func (UnimplementedFiboAppServer) GRPCfiboCalc(context.Context, *Request) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GRPCfiboCalc not implemented")
 }
 func (UnimplementedFiboAppServer) mustEmbedUnimplementedFiboAppServer() {}
 
@@ -70,20 +70,20 @@ func RegisterFiboAppServer(s grpc.ServiceRegistrar, srv FiboAppServer) {
 	s.RegisterService(&FiboApp_ServiceDesc, srv)
 }
 
-func _FiboApp_GRPCStart_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _FiboApp_GRPCfiboCalc_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FiboAppServer).GRPCStart(ctx, in)
+		return srv.(FiboAppServer).GRPCfiboCalc(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.FiboApp/GRPCStart",
+		FullMethod: "/api.FiboApp/GRPCfiboCalc",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FiboAppServer).GRPCStart(ctx, req.(*Request))
+		return srv.(FiboAppServer).GRPCfiboCalc(ctx, req.(*Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -96,8 +96,8 @@ var FiboApp_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*FiboAppServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GRPCStart",
-			Handler:    _FiboApp_GRPCStart_Handler,
+			MethodName: "GRPCfiboCalc",
+			Handler:    _FiboApp_GRPCfiboCalc_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

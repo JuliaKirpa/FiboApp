@@ -4,7 +4,7 @@ option go_package = "./lib";
 package api;
 
 service FiboApp {
-  rpc GRPCStart(Request) returns (Response);
+  rpc GRPCfiboCalc(Request) returns (Response);
 }
 
 message Request {

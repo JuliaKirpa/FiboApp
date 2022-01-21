@@ -2,9 +2,11 @@ package main
 
 import (
 	"FiboApp/api"
+	pb "FiboApp/api/lib"
 	"FiboApp/internal"
 	"google.golang.org/grpc"
 	"log"
+	"net"
 	"os"
 )
 
@@ -21,9 +23,13 @@ func httpStart() {
 	}
 }
 func grpcStart() {
-	GRPCServ := grpc.NewServer()
+	lis, _ := net.Listen("tcp", "localhost:"+os.Getenv("GRPC_PORT"))
+	server := &internal.GServer{}
 
-	if err := api.GRPCRun(os.Getenv("GRPC_PORT"), GRPCServ); err != nil {
-		log.Fatalf("error while running gRPC server: %s", err.Error())
+	GRPCServ := grpc.NewServer()
+	pb.RegisterFiboAppServer(GRPCServ, server)
+
+	if err := GRPCServ.Serve(lis); err != nil {
+		panic(err)
 	}
 }
