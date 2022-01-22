@@ -14,27 +14,31 @@ Project is created with:
 * REST
 * gin-gonic
 * Docker
+* gRPC
 
 ## Setup
 
-Сheck that you have two free ports:
+Сheck that you have free ports:
 
 * 8080  
-* 11211 
+* 11211
+* 50051
 
 if not, replace with yours!
 
-* main.go
-```
-if err := srv.Run("YOUR_PORT", internal.GetInterval())
-
-```
 
 * docker-compose.yml
 
 ```
-  ports:
-  - "YOUR_PORT:11211"
+    ports:
+      - "8080:8080"
+      - "50051:50051"
+    environment:
+      - PORT=8080
+      - MC_PORT=11211
+      - GRPC_PORT=50051
+    ports:
+      - "11211:11211"
 ```
 
 
