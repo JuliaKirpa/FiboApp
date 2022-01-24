@@ -15,15 +15,15 @@ func Validate(start, end string) (from int, to int, err string) {
 	}
 	switch {
 	case from == 0:
-		return 0, 0, "The start value should be bigger than 0\n"
+		return 0, 0, "The start value should be greater than 0\n"
 	case to == 0:
-		return 0, 0, "The end value should be bigger than 0\n"
+		return 0, 0, "The end value should be greater than 0\n"
 	case from < 0:
-		return 0, 0, "The start value should be bigger than 0\n"
+		return 0, 0, "The start value should be greater than 0\n"
 	case to < 0:
-		return 0, 0, "The end value should be bigger than 0\n"
+		return 0, 0, "The end value should be greater than 0\n"
 	case from > to:
-		return 0, 0, "The end value of the interval is bigger than the start value\n"
+		return 0, 0, "The end value of the interval is greater than the start value\n"
 	case from > 2147483647:
 		return 0, 0, "The biggest value for from is 2 147 483 647\n"
 	case to > 2147483647:
